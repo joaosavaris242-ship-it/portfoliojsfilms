@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f3e9e0;
+    --cream-2:#ede0d4;
+    --pink:#e2538e;
+    --pink-2:#c93f77;
+    --pink-light:#f3a9c6;
+    --teal:#1f5b5e;
+    --teal-2:#164345;
+    --navy:#141b2e;
+    --navy-2:#0c1220;
+    --ink:#20232f;
+    --radius:10px;
+    --shadow:0 10px 30px rgba(12,18,32,.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Work Sans', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin:0;
+  }
+  .script{
+    font-family:'Dancing Script', cursive;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(243,233,224,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(226,83,142,.35);
+  }
+  .nav-inner{
+    max-width:1200px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:600;color:var(--navy);}
+  .brand-mark{width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,var(--pink-light),var(--pink) 60%,var(--teal));flex:none;}
+  .nav-links{display:flex;gap:30px;font-size:13px;letter-spacing:1.5px;font-weight:600;text-transform:uppercase;}
+  .nav-links a{color:var(--teal-2);padding-bottom:4px;border-bottom:2px solid transparent;transition:.2s;}
+  .nav-links a:hover{color:var(--pink-2);border-color:var(--pink);}
+  .nav-admin{font-size:11px;letter-spacing:1px;color:#9a8f86;border:1px solid #c9bdb2;padding:6px 12px;border-radius:20px;background:transparent;text-transform:uppercase;}
+  .nav-admin:hover{border-color:var(--pink);color:var(--pink-2);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(180deg,var(--cream) 0%,var(--cream-2) 55%,#e7c3cf 100%);
+    padding:70px 28px 0;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+    position:relative;z-index:3;
+  }
+  .eyebrow{font-size:13px;letter-spacing:4px;color:var(--teal-2);font-weight:600;margin-bottom:14px;}
+  .hero h1{font-size:clamp(52px,8vw,104px);font-weight:700;line-height:.9;color:var(--pink);
+    -webkit-text-stroke:0px;
+    background:repeating-linear-gradient(180deg,var(--pink) 0px,var(--pink) 4px,transparent 4px,transparent 7px);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .tagline{font-size:clamp(26px,3.4vw,38px);color:var(--teal-2);margin-top:14px;line-height:1.15;}
+  .tagline .underline{border-bottom:3px solid var(--pink);padding-bottom:2px;}
+  .desc{margin-top:22px;font-size:16px;line-height:1.6;color:#3c3a3f;max-width:440px;}
+  .cta-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-outline{
+    border:1.5px solid var(--teal-2);color:var(--teal-2);
+    padding:14px 26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+    background:transparent;border-radius:2px;display:inline-flex;align-items:center;gap:10px;transition:.2s;
+  }
+  .btn-outline:hover{background:var(--teal-2);color:var(--cream);}
+  .btn-solid{
+    border:none;background:var(--pink);color:#fff;
+    padding:14px 26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+    border-radius:2px;transition:.2s;
+  }
+  .btn-solid:hover{background:var(--pink-2);}
+
+  .hero-photo-wrap{position:relative;z-index:3;}
+  .hero-photo{
+    position:relative;width:88%;margin-left:auto;
+    border:1px solid rgba(20,27,46,.25);
+    box-shadow:8px 8px 0 rgba(31,91,94,.25);
+  }
+  .hero-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;filter:saturate(1.05) contrast(1.02);}
+
+  .hero-scene{position:absolute;inset:0;z-index:1;pointer-events:none;}
+  .sun{
+    position:absolute;right:6%;top:12%;width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle at 50% 35%,var(--pink-light),var(--pink) 55%,var(--pink-2) 100%);
+    opacity:.55;
+  }
+  .palm{position:absolute;color:var(--teal-2);opacity:.85;}
+  .palm.p1{right:2%;top:8%;width:210px;}
+  .palm.p2{right:14%;top:38%;width:150px;opacity:.6;}
+
+  .grid-floor{
+    position:relative;height:170px;margin-top:50px;
+    background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);
+    overflow:hidden;
+  }
+  .grid-floor svg{position:absolute;bottom:0;left:0;width:100%;height:100%;}
+  .swatches{position:absolute;left:28px;bottom:14px;display:flex;gap:6px;z-index:5;}
+  .swatches span{width:16px;height:16px;display:block;}
+  .swatches span:nth-child(1){background:var(--teal);}
+  .swatches span:nth-child(2){background:var(--pink);}
+  .swatches span:nth-child(3){background:var(--navy);}
+  .miami-tag{position:absolute;right:28px;top:20px;writing-mode:vertical-rl;font-size:12px;letter-spacing:4px;color:var(--pink);opacity:.8;z-index:5;}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:90px 28px;}
+  .section-inner{max-width:1200px;margin:0 auto;}
+  .section-head{margin-bottom:46px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+  .section-head h2{font-size:38px;color:var(--pink);}
+  .section-head p{color:#7a746c;font-size:15px;margin-top:8px;max-width:480px;}
+  .projects-section{background:var(--navy);}
+  .projects-section .section-head h2{color:var(--pink-light);}
+  .projects-section .section-head p{color:#a9a8b8;}
+
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px;}
+  .proj-card{
+    position:relative;background:var(--navy-2);border:1px solid rgba(226,83,142,.25);
+    overflow:hidden;transition:transform .2s, border-color .2s;
+  }
+  .proj-card:hover{transform:translateY(-4px);border-color:var(--pink);}
+  .proj-thumb{position:relative;aspect-ratio:16/10;background:#080b14;overflow:hidden;cursor:pointer;}
+  .proj-thumb img{width:100%;height:100%;object-fit:cover;opacity:.88;transition:.3s;}
+  .proj-card:hover .proj-thumb img{opacity:1;transform:scale(1.04);}
+  .play-badge{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .play-badge span{
+    width:54px;height:54px;border-radius:50%;background:rgba(226,83,142,.9);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:0;
+  }
+  .play-badge svg{width:18px;height:18px;margin-left:3px;}
+  .proj-body{padding:18px 20px 22px;}
+  .proj-body h3{font-size:17px;color:var(--cream);letter-spacing:.5px;}
+  .proj-body p{margin:8px 0 0;font-size:13.5px;color:#b7b4c6;line-height:1.5;}
+  .proj-admin-bar{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:5;}
+  .icon-btn{
+    width:30px;height:30px;border-radius:50%;background:rgba(12,18,32,.75);border:1px solid rgba(255,255,255,.2);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .icon-btn:hover{background:var(--pink);}
+
+  .add-proj-card{
+    border:2px dashed rgba(226,83,142,.4);background:transparent;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    min-height:240px;color:var(--pink-light);font-size:14px;letter-spacing:1px;text-transform:uppercase;
+  }
+  .add-proj-card:hover{border-color:var(--pink);background:rgba(226,83,142,.06);}
+  .add-proj-card .plus{font-size:32px;line-height:1;font-family:'Oswald';}
+
+  .empty-state{color:#8f8ca0;font-size:14px;padding:40px 0;}
+
+  /* CONTACT */
+  .contact-section{background:var(--cream-2);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .contact-card{background:#fff;border:1px solid #e4d7cb;padding:30px;border-radius:var(--radius);}
+  .contact-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee2d8;font-size:15px;}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row .lbl{color:#a89a8c;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;width:100px;flex:none;}
+  .contact-blurb{font-size:15px;line-height:1.7;color:#4a4640;}
+
+  footer{background:var(--navy-2);color:#8f8ca0;padding:26px 28px;text-align:center;font-size:12px;letter-spacing:1px;}
+  footer a{color:var(--pink-light);}
+
+  .admin-fab{
+    position:fixed;bottom:22px;right:22px;z-index:50;
+    background:var(--navy);color:var(--pink-light);border:1px solid var(--pink);
+    border-radius:30px;padding:12px 18px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;
+  }
+  .admin-fab.on{background:var(--pink);color:#fff;border-color:var(--pink);}
+
+  .edit-pencil{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;background:var(--pink);color:#fff;
+    font-size:12px;margin-left:10px;vertical-align:middle;border:none;
+  }
+
+  /* MODAL */
+  .overlay{
+    position:fixed;inset:0;background:rgba(12,18,32,.72);z-index:100;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    opacity:0;pointer-events:none;transition:opacity .2s;
+  }
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .modal{
+    background:var(--cream);width:100%;max-width:520px;max-height:88vh;overflow-y:auto;
+    border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);position:relative;
+  }
+  .modal.video-modal{max-width:800px;background:#000;padding:0;}
+  .modal h3{font-size:20px;color:var(--navy);margin-bottom:18px;}
+  .modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;color:#8a7f74;width:30px;height:30px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8a7f74;margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%;padding:11px 12px;border:1px solid #d8cabb;border-radius:6px;font-family:inherit;font-size:14px;
+    background:#fff;color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+  .field small{display:block;margin-top:5px;color:#a89a8c;font-size:11.5px;}
+  .modal-actions{display:flex;gap:10px;margin-top:22px;}
+  .modal-error{background:#fde5e5;color:#a12626;padding:10px 12px;border-radius:6px;font-size:13px;margin-bottom:14px;}
+  .modal-msg{font-size:13px;color:#5a7a5a;margin-bottom:14px;}
+  .video-frame{width:100%;aspect-ratio:16/9;background:#000;}
+  .video-frame iframe, .video-frame video{width:100%;height:100%;border:none;}
+  .video-caption{padding:18px 20px;color:#e9e4dc;}
+  .video-caption h3{color:#fff;}
+  .video-caption p{color:#b7b4c6;font-size:13.5px;margin-top:6px;}
+
+  @media(max-width:860px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-photo{width:100%;margin-top:20px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .sun{width:220px;height:220px;}
+    .miami-tag{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-mark"></span><span id="nav-name">PORTFOLIO</span></div>
+    <div class="nav-links">
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <button class="nav-admin" id="admin-nav-btn">Admin</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-scene">
+    <div class="sun"></div>
+    <svg class="palm p1" viewBox="0 0 200 240" fill="none"><path d="M100 240V90" stroke="currentColor" stroke-width="6"/><path d="M100 100C70 80 40 85 15 60" stroke="currentColor" stroke-width="6" fill="none"/><path d="M100 95C130 78 155 82 180 55" stroke="currentColor" stroke-width="6" fill="none"/><path d="M100 90C80 65 65 40 55 10" stroke="currentColor" stroke-width="6" fill="none"/><path d="M100 90C120 65 135 42 150 15" stroke="currentColor" stroke-width="6" fill="none"/><path d="M100 92C95 60 100 35 95 5" stroke="currentColor" stroke-width="6" fill="none"/></svg>
+    <div class="miami-tag">MIAMI 1986</div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow" id="hero-role">EDITOR AUDIOVISUAL</div>
+      <h1 id="hero-name">PORTFOLIO</h1>
+      <div class="tagline script" id="hero-tagline"></div>
+      <p class="desc" id="hero-desc">Transformo ideias em experiências visuais marcantes com ritmo, criatividade e estilo.</p>
+      <div class="cta-row">
+        <a href="#projetos" class="btn-outline">Ver projetos &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo"><img id="hero-photo-img" src="" alt="Foto de perfil"></div>
+    </div>
+  </div>
+  <div class="grid-floor">
+    <svg viewBox="0 0 1200 170" preserveAspectRatio="none">
+      <g stroke="#e2538e" stroke-opacity="0.35" stroke-width="1">
+        <line x1="0" y1="170" x2="600" y2="0"/>
+        <line x1="150" y1="170" x2="600" y2="0"/>
+        <line x1="300" y1="170" x2="600" y2="0"/>
+        <line x1="450" y1="170" x2="600" y2="0"/>
+        <line x1="600" y1="170" x2="600" y2="0"/>
+        <line x1="750" y1="170" x2="600" y2="0"/>
+        <line x1="900" y1="170" x2="600" y2="0"/>
+        <line x1="1050" y1="170" x2="600" y2="0"/>
+        <line x1="1200" y1="170" x2="600" y2="0"/>
+        <line x1="0" y1="140" x2="1200" y2="140"/>
+        <line x1="0" y1="105" x2="1200" y2="105"/>
+        <line x1="0" y1="65" x2="1200" y2="65"/>
+        <line x1="0" y1="15" x2="1200" y2="15"/>
+      </g>
+    </svg>
+    <div class="swatches"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<section class="block projects-section" id="projetos">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <h2>Projetos</h2>
+        <p>Uma seleção de vídeos e edições. Clique em qualquer card para assistir.</p>
+      </div>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<section class="block contact-section" id="contato">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <h2 style="color:var(--pink-2)">Contato</h2>
+        <p style="color:#7a746c">Vamos conversar sobre o seu próximo projeto.</p>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-blurb" id="contact-blurb"></div>
+      <div class="contact-card" id="contact-card"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; <span id="footer-year"></span> <span id="footer-name">Portfolio</span>. Todos os direitos reservados.
+</footer>
+
+<button class="admin-fab" id="admin-fab">Modo admin</button>
+
+<div class="overlay" id="overlay"></div>
+
+<script>
+const STORAGE_KEYS = {
+  content: 'portfolio:content',
+  projects: 'portfolio:projects',
+  auth: 'portfolio:admin-auth'
+};
+
+const DEFAULT_CONTENT = {
+  name: 'SEU NOME',
+  role: 'EDITOR AUDIOVISUAL',
+  tagline1: 'Editor histórias.',
+  tagline2: 'Crio sensações.',
+  desc: 'Transformo ideias em experiências visuais marcantes com ritmo, criatividade e estilo.',
+  photoUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80&auto=format&fit=crop',
+  contactBlurb: 'Disponível para projetos freelance, edição de vídeo, motion graphics e color grading. Me chame e vamos criar algo marcante juntos.',
+  email: 'contato@seudominio.com',
+  phone: '+55 (00) 00000-0000',
+  instagram: '@seuinstagram'
+};
+
+let content = { ...DEFAULT_CONTENT };
+let projects = [];
+let isAdmin = false;
+
+function esc(s){
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+async function sha256(text){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function loadAll(){
+  try{
+    const c = await window.storage.get(STORAGE_KEYS.content, true);
+    if(c && c.value) content = { ...DEFAULT_CONTENT, ...JSON.parse(c.value) };
+  }catch(e){}
+  try{
+    const p = await window.storage.get(STORAGE_KEYS.projects, true);
+    if(p && p.value) projects = JSON.parse(p.value);
+  }catch(e){}
+  render();
+}
+
+async function saveContent(){
+  try{
+    await window.storage.set(STORAGE_KEYS.content, JSON.stringify(content), true);
+  }catch(e){ alert('Não foi possível salvar. Tente novamente.'); }
+}
+
+async function saveProjects(){
+  try{
+    await window.storage.set(STORAGE_KEYS.projects, JSON.stringify(projects), true);
+  }catch(e){ alert('Não foi possível salvar. Tente novamente.'); }
+}
+
+function extractYouTubeId(url){
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function extractVimeoId(url){
+  const m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  return m ? m[1] : null;
+}
+function isDirectVideo(url){
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+}
+function autoThumb(videoUrl){
+  const yt = extractYouTubeId(videoUrl);
+  if(yt) return `https://img.youtube.com/vi/${yt}/hqdefault.jpg`;
+  return '';
+}
+function embedFor(videoUrl){
+  const yt = extractYouTubeId(videoUrl);
+  if(yt) return `<iframe src="https://www.youtube.com/embed/${yt}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  const vm = extractVimeoId(videoUrl);
+  if(vm) return `<iframe src="https://player.vimeo.com/video/${vm}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  if(isDirectVideo(videoUrl)) return `<video src="${esc(videoUrl)}" controls autoplay></video>`;
+  return `<div style="padding:40px;color:#fff;text-align:center">Link de vídeo não reconhecido. <a href="${esc(videoUrl)}" target="_blank" style="color:#e2538e">Abrir em nova aba</a></div>`;
+}
+
+function render(){
+  document.getElementById('nav-name').textContent = content.name;
+  document.getElementById('hero-role').textContent = content.role;
+  document.getElementById('hero-name').textContent = content.name;
+  document.getElementById('hero-tagline').innerHTML =
+    `${esc(content.tagline1)}<br><span class="underline">${esc(content.tagline2)}</span>`;
+  document.getElementById('hero-desc').textContent = content.desc;
+  document.getElementById('hero-photo-img').src = content.photoUrl || DEFAULT_CONTENT.photoUrl;
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  document.getElementById('footer-name').textContent = content.name;
+  document.getElementById('contact-blurb').textContent = content.contactBlurb;
+  document.getElementById('contact-card').innerHTML = `
+    <div class="contact-row"><span class="lbl">Email</span><span>${esc(content.email)}</span></div>
+    <div class="contact-row"><span class="lbl">Telefone</span><span>${esc(content.phone)}</span></div>
+    <div class="contact-row"><span class="lbl">Instagram</span><span>${esc(content.instagram)}</span></div>
+  `;
+
+  renderHeroEditAffordances();
+  renderContactEditAffordance();
+  renderProjects();
+
+  document.getElementById('admin-fab').textContent = isAdmin ? 'Sair do modo admin' : 'Modo admin';
+  document.getElementById('admin-fab').classList.toggle('on', isAdmin);
+}
+
+function renderHeroEditAffordances(){
+  const eyebrow = document.getElementById('hero-role');
+  let existing = document.getElementById('hero-edit-btn');
+  if(existing) existing.remove();
+  if(isAdmin){
+    const btn = document.createElement('button');
+    btn.id = 'hero-edit-btn';
+    btn.className = 'edit-pencil';
+    btn.title = 'Editar cabeçalho';
+    btn.textContent = '✎';
+    btn.onclick = openHeroEditor;
+    eyebrow.after(btn);
+  }
+}
+
+function renderContactEditAffordance(){
+  const head = document.querySelector('#contato .section-head > div h2');
+  let existing = document.getElementById('contact-edit-btn');
+  if(existing) existing.remove();
+  if(isAdmin){
+    const btn = document.createElement('button');
+    btn.id = 'contact-edit-btn';
+    btn.className = 'edit-pencil';
+    btn.title = 'Editar contato';
+    btn.textContent = '✎';
+    btn.onclick = openContactEditor;
+    head.after(btn);
+  }
+}
+
+function renderProjects(){
+  const grid = document.getElementById('projects-grid');
+  grid.innerHTML = '';
+  if(projects.length === 0 && !isAdmin){
+    grid.innerHTML = '<div class="empty-state">Nenhum projeto publicado ainda. Volte em breve.</div>';
+  } else {
+    projects.forEach(p=>{
+      const card = document.createElement('div');
+      card.className = 'proj-card';
+      const thumb = p.thumbnailUrl || autoThumb(p.videoUrl) || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80&auto=format&fit=crop';
+      card.innerHTML = `
+        ${isAdmin ? `<div class="proj-admin-bar">
+          <button class="icon-btn" data-edit="${p.id}" title="Editar">✎</button>
+          <button class="icon-btn" data-del="${p.id}" title="Excluir">✕</button>
+        </div>` : ''}
+        <div class="proj-thumb" data-play="${p.id}">
+          <img src="${esc(thumb)}" alt="${esc(p.title)}">
+          <div class="play-badge"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+        </div>
+        <div class="proj-body">
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(p.description || '')}</p>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+  if(isAdmin){
+    const add = document.createElement('button');
+    add.className = 'add-proj-card';
+    add.innerHTML = '<span class="plus">+</span><span>Adicionar projeto</span>';
+    add.onclick = () => openProjectEditor(null);
+    grid.appendChild(add);
+  }
+
+  grid.querySelectorAll('[data-play]').forEach(el=>{
+    el.onclick = () => {
+      const p = projects.find(x=>x.id === el.dataset.play);
+      if(p) openVideoModal(p);
+    };
+  });
+  grid.querySelectorAll('[data-edit]').forEach(el=>{
+    el.onclick = (e) => { e.stopPropagation(); const p = projects.find(x=>x.id===el.dataset.edit); openProjectEditor(p); };
+  });
+  grid.querySelectorAll('[data-del]').forEach(el=>{
+    el.onclick = async (e) => {
+      e.stopPropagation();
+      if(!confirm('Excluir este projeto?')) return;
+      projects = projects.filter(x=>x.id !== el.dataset.del);
+      await saveProjects();
+      render();
+    };
+  });
+}
+
+/* ---------- MODAL SYSTEM ---------- */
+const overlay = document.getElementById('overlay');
+function closeModal(){
+  overlay.classList.remove('show');
+  setTimeout(()=>{ overlay.innerHTML=''; }, 200);
+}
+overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+
+function openModal(innerHTML, extraClass){
+  overlay.innerHTML = `<div class="modal ${extraClass||''}"><button class="modal-close" id="modal-close-btn">&times;</button>${innerHTML}</div>`;
+  overlay.classList.add('show');
+  document.getElementById('modal-close-btn').onclick = closeModal;
+}
+
+function openVideoModal(p){
+  openModal(`
+    <div class="video-frame">${embedFor(p.videoUrl)}</div>
+    <div class="video-caption"><h3>${esc(p.title)}</h3><p>${esc(p.description||'')}</p></div>
+  `, 'video-modal');
+}
+
+/* ---------- ADMIN AUTH ---------- */
+async function getAuth(){
+  try{
+    const r = await window.storage.get(STORAGE_KEYS.auth, true);
+    return r && r.value ? JSON.parse(r.value) : null;
+  }catch(e){ return null; }
+}
+
+async function openAdminModal(){
+  if(typeof window.storage === 'undefined'){
+    openModal(`
+      <h3>Armazenamento indisponível</h3>
+      <div class="modal-error">
+        Este site precisa rodar dentro do preview do Claude (a janela de artefato no chat) para salvar dados —
+        isso não funciona se você baixou o arquivo .html e abriu direto no navegador ou em outro site.
+        Volte à conversa no Claude e use o site pela aba de preview/artefato.
+      </div>
+    `);
+    return;
+  }
+  const auth = await getAuth();
+  if(!auth){
+    openModal(`
+      <h3>Criar senha de administrador</h3>
+      <p style="font-size:13px;color:#8a7f74;margin-bottom:16px">
+        Essa senha protege a edição do site. Guarde-a bem — qualquer pessoa com ela poderá editar o conteúdo.
+      </p>
+      <div id="modal-msg-area"></div>
+      <div class="field"><label>Senha</label><input type="password" id="new-pass"></div>
+      <div class="field"><label>Confirmar senha</label><input type="password" id="new-pass-2"></div>
+      <div class="modal-actions">
+        <button class="btn-solid" id="create-pass-btn">Criar senha</button>
+      </div>
+    `);
+    document.getElementById('create-pass-btn').onclick = async () => {
+      const p1 = document.getElementById('new-pass').value;
+      const p2 = document.getElementById('new-pass-2').value;
+      const msg = document.getElementById('modal-msg-area');
+      if(p1.length < 4){ msg.innerHTML = '<div class="modal-error">A senha precisa ter pelo menos 4 caracteres.</div>'; return; }
+      if(p1 !== p2){ msg.innerHTML = '<div class="modal-error">As senhas não coincidem.</div>'; return; }
+      msg.innerHTML = '<div class="modal-msg">Salvando...</div>';
+      try{
+        const hash = await sha256(p1);
+        const result = await window.storage.set(STORAGE_KEYS.auth, JSON.stringify({ hash }), true);
+        if(!result){ msg.innerHTML = '<div class="modal-error">O servidor não confirmou o salvamento. Tente novamente.</div>'; return; }
+        isAdmin = true;
+        closeModal();
+        render();
+      }catch(e){
+        msg.innerHTML = `<div class="modal-error">Erro ao salvar: ${esc(e && e.message ? e.message : String(e))}</div>`;
+      }
+    };
+  } else {
+    openModal(`
+      <h3>Entrar como admin</h3>
+      <div id="modal-msg-area"></div>
+      <div class="field"><label>Senha</label><input type="password" id="login-pass"></div>
+      <div class="modal-actions">
+        <button class="btn-solid" id="login-btn">Entrar</button>
+      </div>
+    `);
+    document.getElementById('login-btn').onclick = async () => {
+      const p1 = document.getElementById('login-pass').value;
+      const msg = document.getElementById('modal-msg-area');
+      try{
+        const hash = await sha256(p1);
+        if(hash === auth.hash){
+          isAdmin = true;
+          closeModal();
+          render();
+        } else {
+          msg.innerHTML = '<div class="modal-error">Senha incorreta.</div>';
+        }
+      }catch(e){
+        msg.innerHTML = `<div class="modal-error">Erro: ${esc(e && e.message ? e.message : String(e))}</div>`;
+      }
+    };
+    document.getElementById('login-pass').addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') document.getElementById('login-btn').click();
+    });
+  }
+}
+
+document.getElementById('admin-fab').onclick = () => {
+  if(isAdmin){ isAdmin = false; render(); }
+  else openAdminModal();
+};
+document.getElementById('admin-nav-btn').onclick = () => {
+  if(isAdmin){ isAdmin = false; render(); }
+  else openAdminModal();
+};
+
+/* ---------- HERO EDITOR ---------- */
+function openHeroEditor(){
+  openModal(`
+    <h3>Editar cabeçalho</h3>
+    <div class="field"><label>Nome / marca</label><input id="f-name" value="${esc(content.name)}"></div>
+    <div class="field"><label>Ocupação</label><input id="f-role" value="${esc(content.role)}"></div>
+    <div class="field"><label>Frase de efeito — linha 1</label><input id="f-tag1" value="${esc(content.tagline1)}"></div>
+    <div class="field"><label>Frase de efeito — linha 2</label><input id="f-tag2" value="${esc(content.tagline2)}"></div>
+    <div class="field"><label>Descrição</label><textarea id="f-desc">${esc(content.desc)}</textarea></div>
+    <div class="field"><label>URL da foto</label><input id="f-photo" value="${esc(content.photoUrl)}"><small>Cole o link de uma imagem hospedada (ex: Imgur, Unsplash).</small></div>
+    <div class="modal-actions">
+      <button class="btn-solid" id="save-hero-btn">Salvar</button>
+    </div>
+  `);
+  document.getElementById('save-hero-btn').onclick = async () => {
+    content.name = document.getElementById('f-name').value || DEFAULT_CONTENT.name;
+    content.role = document.getElementById('f-role').value;
+    content.tagline1 = document.getElementById('f-tag1').value;
+    content.tagline2 = document.getElementById('f-tag2').value;
+    content.desc = document.getElementById('f-desc').value;
+    content.photoUrl = document.getElementById('f-photo').value;
+    await saveContent();
+    closeModal();
+    render();
+  };
+}
+
+/* ---------- CONTACT EDITOR ---------- */
+function openContactEditor(){
+  openModal(`
+    <h3>Editar contato</h3>
+    <div class="field"><label>Texto de apresentação</label><textarea id="f-blurb">${esc(content.contactBlurb)}</textarea></div>
+    <div class="field"><label>Email</label><input id="f-email" value="${esc(content.email)}"></div>
+    <div class="field"><label>Telefone</label><input id="f-phone" value="${esc(content.phone)}"></div>
+    <div class="field"><label>Instagram</label><input id="f-insta" value="${esc(content.instagram)}"></div>
+    <div class="modal-actions">
+      <button class="btn-solid" id="save-contact-btn">Salvar</button>
+    </div>
+  `);
+  document.getElementById('save-contact-btn').onclick = async () => {
+    content.contactBlurb = document.getElementById('f-blurb').value;
+    content.email = document.getElementById('f-email').value;
+    content.phone = document.getElementById('f-phone').value;
+    content.instagram = document.getElementById('f-insta').value;
+    await saveContent();
+    closeModal();
+    render();
+  };
+}
+
+/* ---------- PROJECT EDITOR ---------- */
+function openProjectEditor(existing){
+  const isNew = !existing;
+  openModal(`
+    <h3>${isNew ? 'Adicionar projeto' : 'Editar projeto'}</h3>
+    <div id="modal-msg-area"></div>
+    <div class="field"><label>Título</label><input id="f-title" value="${existing ? esc(existing.title) : ''}"></div>
+    <div class="field"><label>Descrição</label><textarea id="f-pdesc">${existing ? esc(existing.description||'') : ''}</textarea></div>
+    <div class="field">
+      <label>Link do vídeo</label>
+      <input id="f-video" value="${existing ? esc(existing.videoUrl) : ''}" placeholder="https://youtube.com/watch?v=...">
+      <small>Cole um link do YouTube, Vimeo, ou um link direto de arquivo .mp4 hospedado em algum serviço (ex: YouTube não listado, Vimeo, Google Drive público, etc). Não é possível enviar o arquivo de vídeo diretamente por aqui.</small>
+    </div>
+    <div class="field">
+      <label>URL da miniatura (opcional)</label>
+      <input id="f-thumb" value="${existing ? esc(existing.thumbnailUrl||'') : ''}">
+      <small>Se deixar em branco e o link for do YouTube, a miniatura é gerada automaticamente.</small>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-solid" id="save-proj-btn">${isNew ? 'Adicionar' : 'Salvar'}</button>
+    </div>
+  `);
+  document.getElementById('save-proj-btn').onclick = async () => {
+    const title = document.getElementById('f-title').value.trim();
+    const description = document.getElementById('f-pdesc').value.trim();
+    const videoUrl = document.getElementById('f-video').value.trim();
+    const thumbnailUrl = document.getElementById('f-thumb').value.trim();
+    const msg = document.getElementById('modal-msg-area');
+    if(!title || !videoUrl){ msg.innerHTML = '<div class="modal-error">Preencha ao menos o título e o link do vídeo.</div>'; return; }
+    if(isNew){
+      projects.unshift({ id: 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7), title, description, videoUrl, thumbnailUrl, createdAt: Date.now() });
+    } else {
+      const idx = projects.findIndex(p=>p.id === existing.id);
+      if(idx > -1) projects[idx] = { ...projects[idx], title, description, videoUrl, thumbnailUrl };
+    }
+    await saveProjects();
+    closeModal();
+    render();
+  };
+}
+
+loadAll();
+</script>
+</body>
+</html>
